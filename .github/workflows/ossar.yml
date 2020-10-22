@@ -3,7 +3,7 @@
 #
 # You may wish to alter this file to override the set of languages analyzed,
 # or to provide custom queries or build logic.
-name: "DevSkim"
+name: "OSSAR"
 
 on:
   push:
@@ -20,13 +20,10 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-    - name: Scan with DevSkim
-      uses: microsoft/DevSkim-Action@v1
-      with:
-        directory-to-scan: ./src
-        should-scan-archives: false
-        output-filename: devskim-results.sarif
-    - name: Upload results
+    - name: Run OSSAR
+      uses: github/ossar-action@v1
+      id: ossar
+    - name: Upload results to Security tab
       uses: github/codeql-action/upload-sarif@v1
       with:
-        sarif_file: devskim-results.sarif
+        sarif_file: ${{ steps.ossar.outputs.sarifFile }}
