@@ -76,7 +76,7 @@ namespace Microsoft.eShopWeb.FunctionalTests.Web.Controllers
 
             var keyValues = new List<KeyValuePair<string, string>>();
             keyValues.Add(new KeyValuePair<string, string>("Email", "demouser@microsoft.com"));
-            keyValues.Add(new KeyValuePair<string, string>("Password", "Pass@word1"));
+            keyValues.Add(new KeyValuePair<string, string>("Password", "Pass@word12"));
 
             keyValues.Add(new KeyValuePair<string, string>("__RequestVerificationToken", token));
             var formContent = new FormUrlEncodedContent(keyValues);

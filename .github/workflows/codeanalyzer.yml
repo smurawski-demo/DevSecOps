@@ -1,0 +1,35 @@
+# For most projects, this workflow file will not need changing; you simply need
+# to commit it to your repository.
+#
+# You may wish to alter this file to override the set of languages analyzed,
+# or to provide custom queries or build logic.
+name: "Codeanalyzer"
+
+on:
+  push:
+    branches: [static_analysis]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [static_analysis]
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.201
+    - name: Build with dotnet
+      run: dotnet build ./eShopOnWeb.sln --configuration Release
+    - name: Run C# Code Analyzer      
+      uses: microsoft/CSharpCodeAnalyzer@v0.1
+      id: runcsharpcodeanalyzer
+      with:
+        binary-path: 'src/ApplicationCore/bin/Release/netstandard2.1/'
+    - name: C# Code Analyzer analysis results
+      run: echo "${{ steps.runcsharpcodeanalyzer.outputs.results }}"
